@@ -30,8 +30,51 @@ This project implements a token creation, liquidity pool, and swapping system. T
 
 ![Demo 5](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/5.png)
 
-**Swaping Token1 and Token2**
-* Amount will be calculate using constan product market maker algoritham 
+## Swapping Token1 and Token2
+
+When swapping tokens, the amount received is calculated using the Constant Product Market Maker (CPMM) algorithm.
+
+### Example Calculation
+
+Let's assume the initial reserves in the liquidity pool are as follows:
+
+- **Token1**: 750
+- **Token2**: 250
+
+If you are selling 25 units of **Token2**, the amount of **Token1** received can be calculated using the formula:
+
+\[
+x * y = k
+\]
+
+Where:
+- \( x \) = reserve of Token1
+- \( y \) = reserve of Token2
+- \( k \) = constant product of reserves
+
+1. **Calculate the constant product**:
+   \[
+   k = 750 * 250 = 187500
+   \]
+
+2. **After selling 25 Token2**, the new reserve of Token2 becomes:
+   \[
+   y' = 250 + 25 = 275
+   \]
+
+3. **Using the constant product formula to find the new reserve of Token1 (\( x' \))**:
+   \[
+   x' = k/y' = 187500/275 ~ 681.82
+   \]
+
+4. **The amount of Token1 received from the swap is**:
+   \[
+   \text{Token1 received} = x - x' = 750 - 681.82 ~ 68.18
+   \]
+
+So By selling 25 units of **Token2**, you will receive approximately **68.18** units of **Token1**.
+
+
 
 ![Demo 6](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/6.png)
 
