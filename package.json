@@ -1,0 +1,36 @@
+{
+  "name": "liquidity-pool",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.5.1",
+    "@raydium-io/raydium-sdk-v2": "^0.1.73-alpha",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/spl-token-metadata": "^0.1.6",
+    "@solana/wallet-adapter-base": "^0.9.23",
+    "@solana/wallet-adapter-react": "^0.15.35",
+    "@solana/wallet-adapter-react-ui": "^0.9.35",
+    "@solana/wallet-adapter-wallets": "^0.19.32",
+    "@solana/web3.js": "^1.95.4",
+    "antd": "^5.21.6",
+    "bn.js": "^5.2.1",
+    "next": "15.0.2",
+    "pinata": "^1.7.2",
+    "pinata-web3": "^0.5.2",
+    "react": "19.0.0-rc-02c0e824-20241028",
+    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react-toastify": "^10.0.6"
+  },
+  "devDependencies": {
+    "eslint": "^8",
+    "eslint-config-next": "15.0.2",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1"
+  }
+}
