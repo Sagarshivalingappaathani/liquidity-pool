@@ -16,34 +16,55 @@ This project implements a token creation, liquidity pool, and swapping system. T
 ### 2. Creating New Token Doggy
 ![Liquidity Pool](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/2.png)
 
-### 3. Creating Liquidity Pool
+### 3. Creating Liquidity Pool of Catty and Doggy
 ![Token Swapping](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/3.png)
 
-## CMMM Algorithm (Constant Mean Market Maker) Example
+## Liquidity Pool Creation with CPMM Algorithm
 
-The **Constant Mean Market Maker (CMMM)** algorithm ensures that the liquidity pool remains balanced by maintaining a constant product of the quantities of two tokens. Let's walk through an example:
+### Initial Token Amounts:
+- **Catty Tokens**: 1000
+- **Doggy Tokens**: 500
 
-### Example:
+### Tokens Contributed to the Liquidity Pool:
+- You contribute **750 Catty Tokens** and **250 Doggy Tokens** to the liquidity pool.
 
-Suppose you have a liquidity pool with **Token A** and **Token B**. Initially, the pool contains:
-- 100 **Token A**
-- 200 **Token B**
+### CPMM Algorithm (Constant Product Market Maker):
+The CPMM algorithm ensures that the product of the quantities of the two tokens in the liquidity pool remains constant. The constant product formula is:
 
-The constant product (CMMM) is calculated as:
-Constant Product = Token A Quantity × Token B Quantity = 100 × 200 = 20,000
+Constant Product = Catty Quantity × Doggy Quantity
+
+Initially, the liquidity pool will have:
+Constant Product = 750 (Catty) × 250 (Doggy) = 187,500
+
+### How the CPMM Works:
+Let’s walk through an example where you want to **add 10 Catty Tokens** to the pool and receive **Doggy Tokens** in return.
+
+#### Initial Pool State:
+- **Catty Tokens**: 750
+- **Doggy Tokens**: 250
+
+The constant product is:
+
+Constant Product = 750 (Catty) × 250 (Doggy) = 187,500
 
 
-Now, if a user wants to swap 10 **Token A** for **Token B**, the pool state will adjust to maintain the constant product:
+#### Step 1: Adding 10 Catty Tokens
+You want to **add 10 Catty Tokens** to the pool. After adding, the new Catty Token quantity will be:
+- **New Catty Token Quantity**: 750 + 10 = 760
 
-1. **New Quantity of Token A**: 100 - 10 = 90
-2. To maintain the constant product, the new quantity of **Token B** will be:
+Now, we calculate the new quantity of Doggy tokens to maintain the constant product:
+
+New Doggy Quantity = Constant Product / New Catty Quantity = 187,500 / 760 = 246.05
 
 
-Thus, the user will receive approximately **22.22 Token B** for their 10 **Token A**, and the pool will now have:
-- 90 **Token A**
-- 222.22 **Token B**
+#### Step 2: Doggy Tokens to be Received
+- **Doggy Tokens to be received**: 250 (original) - 246.05 (new) = **3.95 Doggy Tokens**
 
-This ensures that the liquidity pool remains balanced and liquid for token swaps.
+#### Final Pool State:
+- **Catty Tokens**: 760
+- **Doggy Tokens**: 246.05
+
+By adding 10 Catty Tokens, you receive approximately **3.95 Doggy Tokens**, and the pool remains balanced with the constant product maintained at 187,500.
 
 
 ### 4. Tanssaction Confirmation
@@ -52,7 +73,7 @@ This ensures that the liquidity pool remains balanced and liquid for token swaps
 ### 5. Created Liquidity Pool Details
 ![CMMM Algorithm](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/5.png)
 
-### 6. Swaping Tokens
+### 6. Swaping Tokens Catty and Doggy
 ![Adding Liquidity](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/6.png)
 
 ### 7. Tanssaction Confirmation
