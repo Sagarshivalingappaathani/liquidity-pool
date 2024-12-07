@@ -8,5 +8,3 @@ const pinataWeb3 = new PinataSDK({
 
 export default pinataWeb3;
 
-
-//diq916hSvMwjpETGcPkjH4nulN1GHEaRy6CinINywY2-VnJEJGT_f_6rU-eLbgCN

@@ -19,8 +19,8 @@ import {
 } from "@solana/spl-token";
 import { createInitializeInstruction, pack } from "@solana/spl-token-metadata";
 import pinataWeb3 from "../helper/pinataWeb3";
-import { Spin} from "antd";
-import { toast} from 'react-toastify';
+import { Spin } from "antd";
+import { toast } from 'react-toastify';
 
 const TokenLaunchPad = () => {
   const { connected } = useContext(WalletContext);
@@ -39,9 +39,13 @@ const TokenLaunchPad = () => {
       const maxSizeInBytes = 204800;
       if (file.size > maxSizeInBytes) {
         toast.error("File is too large. Max size is 200KB.");
+        console.log("File is too large. Max size is 200KB.");
+        setSelectedFile(null);
       } else {
         setSelectedFile(file);
       }
+    } else {
+      toast.error("File is too large. Max size is 200KB.");
     }
   };
 
@@ -142,9 +146,9 @@ const TokenLaunchPad = () => {
       setDecimals("");
       setSelectedFile(null);
       setLoading(false);
-      toast.success( "Token Launched Successfully");
+      toast.success("Token Launched Successfully");
     } catch (error) {
-      console.error(error);
+      console.log(error);
       setName("");
       setSymbol("");
       setSupply("");
@@ -156,89 +160,83 @@ const TokenLaunchPad = () => {
   };
 
   return (
-    <div className="w-full max-w-mdpx-4 sm:px-6 lg:px-8">
-      <div className="bg-gray-800 shadow-lg rounded-lg p-6 sm:p-8 lg:flex lg:gap-8">
-        {/* Token Creation Form */}
-        <div className="lg:w-full">
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-white">Launch Your Token</h2>
-          <div className="space-y-4">
+    <div className="w-full max-w-lg mx-auto px-4 sm:px-6 lg:px-8 h-[700px] overflow-y-auto">
+      <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-2xl rounded-xl p-8 sm:p-10">
+        <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-white tracking-tight">
+          Create your Own Token
+        </h2>
+        <div className="space-y-6">
+          <input
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-base placeholder-gray-400"
+            value={name}
+            type="text"
+            placeholder="Token Name"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <input
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-base placeholder-gray-400"
+            value={symbol}
+            type="text"
+            placeholder="Token Symbol"
+            onChange={(e) => setSymbol(e.target.value)}
+          />
+          <input
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-base placeholder-gray-400"
+            value={supply}
+            type="number"
+            min="0"
+            step="any"
+            placeholder="Token Supply"
+            onChange={(e) => setSupply(e.target.value)}
+          />
+          <input
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-base placeholder-gray-400"
+            value={decimals}
+            type="number"
+            placeholder="Token Decimals (max 9)"
+            onChange={(e) => {
+              if (Number(e.target.value) > 9) {
+                toast.error("Decimals should be less than 9");
+                return;
+              }
+              setDecimals(e.target.value);
+            }}
+          />
+          <div className="flex items-center justify-center">
+            <label htmlFor="file-upload" className="cursor-pointer group">
+              {selectedFile ? (
+                <img
+                  className="h-20 w-20 object-cover rounded-full border-2 border-blue-500 shadow-md"
+                  src={URL.createObjectURL(selectedFile)}
+                  alt="Preview"
+                />
+              ) : (
+                <div className="bg-gray-700 text-gray-300 rounded-lg px-5 py-3 sm:px-6 sm:py-3 text-base hover:bg-gray-600 hover:text-white transition duration-300 flex items-center justify-center">
+                  Upload Image
+                </div>
+              )}
+            </label>
             <input
-              className="w-full px-3 py-2 sm:px-4 sm:py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
-              value={name}
-              type="text"
-              placeholder="Token Name"
-              onChange={(e) => setName(e.target.value)}
+              id="file-upload"
+              className="hidden"
+              type="file"
+              onChange={handleFileChange}
             />
-            <input
-              className="w-full px-3 py-2 sm:px-4 sm:py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
-              value={symbol}
-              type="text"
-              placeholder="Token Symbol"
-              onChange={(e) => setSymbol(e.target.value)}
-            />
-            <input
-              className="w-full px-3 py-2 sm:px-4 sm:py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
-              value={supply}
-              type="number"
-              min="0"
-              step="any"
-              placeholder="Token Supply"
-              onChange={(e) => setSupply(e.target.value)}
-            />
-            <input
-              className="w-full px-3 py-2 sm:px-4 sm:py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white text-sm sm:text-base"
-              value={decimals}
-              type="number"
-              placeholder="Token Decimals (max 9)"
-              onChange={(e) => {
-                if (Number(e.target.value) > 9) {
-                  notification.error({
-                    message: "Decimals should be less than 9",
-                    placement: "bottomRight",
-                    duration: 2,
-                  });
-                  return;
-                }
-                setDecimals(e.target.value);
-              }}
-            />
-            <div className="flex items-center justify-center">
-              <label htmlFor="file-upload" className="cursor-pointer">
-                {selectedFile ? (
-                  <img
-                    className="h-16 w-16 object-cover rounded-md"
-                    src={URL.createObjectURL(selectedFile)}
-                    alt="Preview"
-                  />
-                ) : (
-                  <div className="bg-gray-700 text-gray-300 rounded-md px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base hover:bg-gray-600 transition duration-300">
-                    Upload Image
-                  </div>
-                )}
-              </label>
-              <input
-                id="file-upload"
-                className="hidden"
-                type="file"
-                onChange={handleFileChange}
-              />
-            </div>
-            <button
-              onClick={launchToken}
-              className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 text-sm sm:text-base ${
-                !connected || loading ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-              disabled={!connected || loading}
-            >
-              {loading ? 'Launching...' : 'Launch Token'}
-            </button>
           </div>
-          {loading && (
-            <div className="mt-4 flex justify-center">
-              <Spin />
-            </div>
-          )}
+          <button
+            onClick={launchToken}
+            className={`w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:from-indigo-600 hover:to-blue-500 transition duration-300 text-base ${!connected || loading ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            disabled={!connected || loading}
+          >
+            {loading ? 'Launching...' : 'Launch Token'}
+          </button>
         </div>
+        {loading && (
+          <div className="mt-6 flex justify-center">
+            <Spin size="large" />
+          </div>
+        )}
       </div>
     </div>
   );

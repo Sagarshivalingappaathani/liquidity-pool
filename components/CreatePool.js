@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { getMint, getTokenMetadata, NATIVE_MINT, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { createPoolLiquidityPool, fetchCPMMPoolInfo, fetchPoolByMints, fetchRPCPoolInfo } from '../utils/raydium.functions';
+import { Spin } from 'antd';
 
 const CreateLiquidityPool = () => {
   const { connection } = useConnection();
@@ -105,7 +106,7 @@ const CreateLiquidityPool = () => {
           };
         }
       });
-      
+
 
       const tokens = await Promise.all(tokensPromises);
       const validTokens = [solToken, ...tokens.filter(token => token !== null)];
@@ -135,7 +136,7 @@ const CreateLiquidityPool = () => {
       return;
     }
 
-    setLoading(true);console.log(`tokenA: ${selectedTokenA}, tokenB: ${selectedTokenB}, amountA: ${amountA}, amountB: ${amountB}`);
+    setLoading(true); console.log(`tokenA: ${selectedTokenA}, tokenB: ${selectedTokenB}, amountA: ${amountA}, amountB: ${amountB}`);
     try {
       await createPoolLiquidityPool(
         walletContext,
@@ -160,15 +161,19 @@ const CreateLiquidityPool = () => {
   };
 
   return (
-    <div className="w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6 sm:p-8">
-      <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-white">Create Liquidity Pool</h2>
-      <div className="space-y-4">
+    <div className="w-full max-w-lg mx-auto px-4 sm:px-6 lg:px-8 h-[700px] overflow-y-auto">
+    <div className="bg-gradient-to-br from-gray-800 via-gray-900 to-black shadow-2xl rounded-xl p-8 sm:p-10">
+      <h2 className="text-2xl sm:text-3xl font-extrabold mb-6 text-center text-white tracking-tight">
+        Create Liquidity Pool
+      </h2>
+      <div className="space-y-6">
+        {/* Token A Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Token A</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Token A</label>
           <select
             value={selectedTokenA}
             onChange={(e) => setSelectedTokenA(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
           >
             <option value="">Select Token A</option>
             {userTokens.map((token) => (
@@ -177,33 +182,37 @@ const CreateLiquidityPool = () => {
               </option>
             ))}
           </select>
+          {selectedTokenA && (
+            <div className="flex items-center mt-2 space-x-3">
+              <img
+                src={userTokens.find((t) => t.mint === selectedTokenA)?.image}
+                alt={userTokens.find((t) => t.mint === selectedTokenA)?.symbol}
+                className="w-8 h-8 rounded-full border-2 border-blue-500"
+              />
+              <span className="text-white font-medium">
+                {userTokens.find((t) => t.mint === selectedTokenA)?.name}
+              </span>
+            </div>
+          )}
         </div>
-        {selectedTokenA && (
-          <div className="flex items-center space-x-2">
-            <img
-              src={userTokens.find(t => t.mint === selectedTokenA)?.image}
-              alt={userTokens.find(t => t.mint === selectedTokenA)?.symbol}
-              className="w-6 h-6 rounded-full"
-            />
-            <span className="text-white">{userTokens.find(t => t.mint === selectedTokenA)?.name}</span>
-          </div>
-        )}
+        {/* Amount A */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Amount A</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Amount A</label>
           <input
             type="number"
             value={amountA}
             onChange={(e) => setAmountA(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
             placeholder="Enter amount for Token A"
           />
         </div>
+        {/* Token B Selection */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Token B</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Token B</label>
           <select
             value={selectedTokenB}
             onChange={(e) => setSelectedTokenB(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
           >
             <option value="">Select Token B</option>
             {userTokens.map((token) => (
@@ -212,38 +221,49 @@ const CreateLiquidityPool = () => {
               </option>
             ))}
           </select>
+          {selectedTokenB && (
+            <div className="flex items-center mt-2 space-x-3">
+              <img
+                src={userTokens.find((t) => t.mint === selectedTokenB)?.image}
+                alt={userTokens.find((t) => t.mint === selectedTokenB)?.symbol}
+                className="w-8 h-8 rounded-full border-2 border-blue-500"
+              />
+              <span className="text-white font-medium">
+                {userTokens.find((t) => t.mint === selectedTokenB)?.name}
+              </span>
+            </div>
+          )}
         </div>
-        {selectedTokenB && (
-          <div className="flex items-center space-x-2">
-            <img
-              src={userTokens.find(t => t.mint === selectedTokenB)?.image}
-              alt={userTokens.find(t => t.mint === selectedTokenB)?.symbol}
-              className="w-6 h-6 rounded-full"
-            />
-            <span className="text-white">{userTokens.find(t => t.mint === selectedTokenB)?.name}</span>
-          </div>
-        )}
+        {/* Amount B */}
         <div>
-          <label className="block text-sm font-medium text-gray-300 mb-1">Amount B</label>
+          <label className="block text-sm font-medium text-gray-300 mb-2">Amount B</label>
           <input
             type="number"
             value={amountB}
             onChange={(e) => setAmountB(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-white"
+            className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-white placeholder-gray-400"
             placeholder="Enter amount for Token B"
           />
         </div>
+        {/* Create Pool Button */}
         <button
           onClick={handleCreatePool}
           disabled={loading}
-          className={`w-full py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition duration-300 ${
+          className={`w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-lg hover:from-indigo-600 hover:to-blue-500 transition duration-300 ${
             loading ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           {loading ? 'Creating Pool...' : 'Create Liquidity Pool'}
         </button>
+        {loading && (
+          <div className="mt-6 flex justify-center">
+            <Spin size="large" />
+          </div>
+        )}
       </div>
     </div>
+  </div>
+  
   );
 };
 
