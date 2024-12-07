@@ -1,6 +1,6 @@
 # Token Swap & Liquidity Pool Project
 
-This project implements a token creation, liquidity pool, and swapping system. Token metadata is stored on [Pinata](https://www.pinata.cloud/) for decentralized file storage, with a Constant Mean Market Maker (CMMM) algorithm used for the liquidity pool. Users can swap tokens if a liquidity pool is available.
+This project implements a token creation, liquidity pool, and swapping system. Token metadata is stored on [Pinata](https://www.pinata.cloud/) for decentralized file storage, with a Constant Product Market Maker (CPMM) algorithm used for the liquidity pool. Users can swap tokens if a liquidity pool is available.
 
 ## Features
 

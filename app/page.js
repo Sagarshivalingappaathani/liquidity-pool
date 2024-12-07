@@ -43,9 +43,9 @@ function App() {
                 <WalletMultiButtonDynamic className="btn-primary" />
                 <WalletDisconnectButtonDynamic className="btn-secondary" />
               </div>
-              {/* <div className="w-full max-w-4xl">
-                  <UserTokens/>
-                </div> */}
+              <div className="w-full max-w-4xl">
+                <UserTokens />
+              </div>
               <div className="flex flex-row items-center w-full space-y-8 mb-5">
                 <TokenLaunchPad />
                 <CreateLiquidityPool />
