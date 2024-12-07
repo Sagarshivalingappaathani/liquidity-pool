@@ -37,7 +37,7 @@ Initially, the liquidity pool will have:
 Constant Product = 750 (Catty) × 250 (Doggy) = 187,500
 
 ### How the CPMM Works:
-Let’s walk through an example where you want to **add 10 Catty Tokens** to the pool and receive **Doggy Tokens** in return.
+Let’s walk through an example where you want to **add 25 Doogy Tokens** to the pool and receive **Catty Tokens** in return.
 
 #### Initial Pool State:
 - **Catty Tokens**: 750
@@ -48,23 +48,23 @@ The constant product is:
 Constant Product = 750 (Catty) × 250 (Doggy) = 187,500
 
 
-#### Step 1: Adding 10 Catty Tokens
-You want to **add 10 Catty Tokens** to the pool. After adding, the new Catty Token quantity will be:
-- **New Catty Token Quantity**: 750 + 10 = 760
+#### Step 1: Adding 25 Doggy Tokens
+You want to **add 25 Doggy Tokens** to the pool. After adding, the new Doogy Token quantity will be:
+- **New Doggy Token Quantity**: 250+25 = 275
 
 Now, we calculate the new quantity of Doggy tokens to maintain the constant product:
 
-New Doggy Quantity = Constant Product / New Catty Quantity = 187,500 / 760 = 246.05
+New Catty Quantity = Constant Product / New Doggy Quantity = 187,500 / 275 = 681.81
 
 
-#### Step 2: Doggy Tokens to be Received
-- **Doggy Tokens to be received**: 250 (original) - 246.05 (new) = **3.95 Doggy Tokens**
+#### Step 2: Catty Tokens to be Received
+- **Catty Tokens to be received**: 750 (original) - 681.81 (new) = **68.18 Catty Tokens**
 
 #### Final Pool State:
-- **Catty Tokens**: 760
-- **Doggy Tokens**: 246.05
+- **Catty Tokens**: 681.81
+- **Doggy Tokens**: 275
 
-By adding 10 Catty Tokens, you receive approximately **3.95 Doggy Tokens**, and the pool remains balanced with the constant product maintained at 187,500.
+By adding 25 Doggy Tokens, you receive approximately **68.18 Catty Tokens**, and the pool remains balanced with the constant product maintained at 187,500.
 
 
 ### 4. Tanssaction Confirmation
@@ -79,5 +79,3 @@ By adding 10 Catty Tokens, you receive approximately **3.95 Doggy Tokens**, and 
 ### 7. Tanssaction Confirmation
 ![Swapping Tokens](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/7.png)
 
-### 8. Wallet
-![Swap Confirmation](https://github.com/Sagarshivalingappaathani/liquidity-pool/blob/main/screenshots/8.png)
