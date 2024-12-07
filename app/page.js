@@ -39,6 +39,10 @@ function App() {
           <WalletModalProvider>
             <ToastContainer />
             <div className="flex flex-col items-center justify-center min-h-screen p-6 space-y-8 ">
+              {/* Disclaimer */}
+              <p className="text-sm text-center text-gray-600">
+                This application works only on the <span className="font-semibold text-blue-600">Solana Devnet</span> only.
+              </p>
               <div className="flex items-center space-x-4">
                 <WalletMultiButtonDynamic className="btn-primary" />
                 <WalletDisconnectButtonDynamic className="btn-secondary" />
