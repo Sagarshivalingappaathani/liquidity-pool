@@ -15,17 +15,20 @@ const geistMono = localFont({
 export const metadata = {
   title: "Liquidity Pool",
   description: "Liquidity Pool",
-  
+
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({children}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
+      <body>
+        <div className='main'>
+          <div className='gradient' />
+        </div>
+        <div>
+          {children}
+        </div>
       </body>
     </html>
-  );
+  )
 }
