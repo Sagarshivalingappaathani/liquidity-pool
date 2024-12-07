@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { getMint, getTokenMetadata, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { notification } from 'antd';
+import { toast} from 'react-toastify';
 import { fetchCPMMPoolInfo, getAmountOfTokenBForTokenA, getAmountOfTokenBForTokenAv2, swapTokenAForTokenB } from '../utils/raydium.functions';
 import { SwapOutlined } from '@ant-design/icons';
 
@@ -165,19 +165,13 @@ const TokenSwap = () => {
       setUserTokens(validTokens);
     } catch (error) {
       console.error('Error fetching user tokens:', error);
-      notification.error({
-        message: 'Error',
-        description: 'Failed to fetch user tokens. Please try again.',
-      });
+     toast.error('Failed to fetch user tokens. Please try again.');
     }
   };
 
   const handleSwap = async () => {
     if (!selectedTokenA || !selectedTokenB || !amountA) {
-      notification.error({
-        message: 'Incomplete Information',
-        description: 'Please select tokens and enter an amount to swap.',
-      });
+      toast.error('Please select tokens and enter an amount to swap.');
       return;
     }
 
@@ -190,23 +184,14 @@ const TokenSwap = () => {
       setSelectedTokenA('')
       setSelectedTokenB('')
       if(swapResult) {
-          notification.success({
-            message: 'Swap Successful',
-            description: 'Your swap request has been initiated. Please check your wallet for confirmation.',
-          });
+         toast.success('Your swap request has been initiated. Please check your wallet for confirmation.');
       }
       else{
-        notification.error({
-          message: 'Error',
-          description: 'Failed to swap tokens. Please try again.',
-        });
+        toast.error('Failed to swap tokens. Please try again.');
       }
     } catch (error) {
-      console.error('Error swapping tokens:', error);
-      notification.error({
-        message: 'Error',
-        description: 'Failed to swap tokens. Please try again.',
-      });
+      //console.error('Error swapping tokens:', error);
+      toast.error('Failed to swap tokens. Please try again.');
     } finally {
       setLoading(false);
     }

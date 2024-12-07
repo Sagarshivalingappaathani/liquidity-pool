@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { PublicKey, LAMPORTS_PER_SOL } from '@solana/web3.js';
 import { getMint, getTokenMetadata, NATIVE_MINT, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from '@solana/spl-token';
-import { notification } from 'antd';
+import { toast} from 'react-toastify';
 import { createPoolLiquidityPool, fetchCPMMPoolInfo, fetchPoolByMints, fetchRPCPoolInfo } from '../utils/raydium.functions';
 
 const CreateLiquidityPool = () => {
@@ -112,19 +112,13 @@ const CreateLiquidityPool = () => {
       setUserTokens(validTokens);
     } catch (error) {
       console.error('Error fetching user tokens:', error);
-      notification.error({
-        message: 'Error',
-        description: 'Failed to fetch user tokens. Please try again.',
-      });
+      toast.error('Failed to fetch user tokens. Please try again.');
     }
   };
 
   const handleCreatePool = async () => {
     if (!selectedTokenA || !selectedTokenB || !amountA || !amountB) {
-      notification.error({
-        message: 'Incomplete Information',
-        description: 'Please select tokens and enter amounts for both tokens.',
-      });
+      toast.error('Please select tokens and enter amounts for both tokens.');
       return;
     }
 
@@ -132,18 +126,12 @@ const CreateLiquidityPool = () => {
     const tokenB = userTokens.find(token => token.mint === selectedTokenB);
 
     if (!tokenA || !tokenB) {
-      notification.error({
-        message: 'Invalid Token Selection',
-        description: 'Please select valid tokens from your wallet.',
-      });
+      toast.error('Please select valid tokens from your wallet.');
       return;
     }
 
     if (parseFloat(amountA) > tokenA.balance || parseFloat(amountB) > tokenB.balance) {
-      notification.error({
-        message: 'Insufficient Balance',
-        description: 'You do not have enough balance for the selected amounts.',
-      });
+      toast.error('You do not have enough balance for the selected amounts.');
       return;
     }
 
@@ -158,18 +146,16 @@ const CreateLiquidityPool = () => {
         tokenA.programId,
         tokenB.programId
       );
-      notification.success({
-        message: 'Success',
-        description: 'Liquidity pool created successfully!',
-      });
+      toast.success('Liquidity pool created successfully!');
     } catch (error) {
       console.error('Error creating liquidity pool:', error);
-      notification.error({
-        message: 'Error',
-        description: 'Failed to create liquidity pool. Please try again.',
-      });
+      toast.error('Failed to create liquidity pool. Please try again.');
     } finally {
       setLoading(false);
+      setAmountA('');
+      setAmountB('');
+      setSelectedTokenA('');
+      setSelectedTokenB('');
     }
   };
 

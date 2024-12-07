@@ -14,6 +14,7 @@ import dynamic from 'next/dynamic';
 import TokenLaunchPad from '@/components/TokenLaunchPad';
 import CreateLiquidityPool from '@/components/CreatePool';
 import TokenSwap from '@/components/TokenSwap';
+import 'react-toastify/dist/ReactToastify.css';
 
 // Dynamic imports for wallet buttons to avoid server-side rendering issues
 const WalletMultiButtonDynamic = dynamic(

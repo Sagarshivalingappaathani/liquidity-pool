@@ -19,8 +19,8 @@ import {
 } from "@solana/spl-token";
 import { createInitializeInstruction, pack } from "@solana/spl-token-metadata";
 import pinataWeb3 from "../helper/pinataWeb3";
-import { Spin, notification } from "antd";
-
+import { Spin} from "antd";
+import { toast} from 'react-toastify';
 
 const TokenLaunchPad = () => {
   const { connected } = useContext(WalletContext);
@@ -38,11 +38,7 @@ const TokenLaunchPad = () => {
     if (file) {
       const maxSizeInBytes = 204800;
       if (file.size > maxSizeInBytes) {
-        notification.error({
-          message: "File is too large. Max size is 200KB.",
-          placement: "bottomRight",
-          duration: 2,
-        });
+        toast.error("File is too large. Max size is 200KB.");
       } else {
         setSelectedFile(file);
       }
@@ -146,11 +142,7 @@ const TokenLaunchPad = () => {
       setDecimals("");
       setSelectedFile(null);
       setLoading(false);
-      notification.success({
-        message: "Token Launched Successfully",
-        placement: "TopLeft",
-        duration: 2,
-      });
+      toast.success( "Token Launched Successfully");
     } catch (error) {
       console.error(error);
       setName("");
@@ -159,11 +151,7 @@ const TokenLaunchPad = () => {
       setDecimals("");
       setSelectedFile(null);
       setLoading(false);
-      notification.error({
-        message: error,
-        placement: "TopLeft",
-        duration: 2,
-      });
+      notification.error(error);
     }
   };
 
@@ -251,25 +239,6 @@ const TokenLaunchPad = () => {
             </div>
           )}
         </div>
-
-        {/* Additional Information or Features */}
-        {/* <div className="lg:w-1/2 mt-8 lg:mt-0">
-          <h2 className="text-xl sm:text-2xl font-bold mb-6 text-center text-white">Token Launchpad Features</h2>
-          <div className="space-y-4 text-gray-300">
-            <div className="bg-gray-700 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2">Create Custom Tokens</h3>
-              <p>Launch your own token on the Solana blockchain with ease. Customize name, symbol, supply, and more.</p>
-            </div>
-            <div className="bg-gray-700 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2">Manage Your Tokens</h3>
-              <p>Keep track of all your created tokens in one place. View balances, transfer tokens, and more.</p>
-            </div>
-            <div className="bg-gray-700 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2">Secure and Fast</h3>
-              <p>Benefit from Solana's high-speed and low-cost transactions. Your tokens are secured by blockchain technology.</p>
-            </div>
-          </div> */}
-        {/* </div> */}
       </div>
     </div>
   );
